@@ -9,6 +9,7 @@ using namespace std;
 // maybe try to implement in a different way by abstract
 // component
 class Employee{
+protected:
     string name;
     int age;
 public:
@@ -16,13 +17,11 @@ public:
         this->name = name;
         this->age = age;
     }
-    virtual void work(){
-        cout << this->name << " is working\n";
-    };
+    virtual void work(){}
 
-    virtual void addEmployee(Employee * employee) {};
+    virtual void addEmployee(Employee * employee) {}
 
-    virtual void removeEmployee(Employee * employee) {};
+    virtual void removeEmployee(Employee * employee) {}
 
     string getName(){
         return this->name;
@@ -40,6 +39,9 @@ public:
 class Engineer: public Employee{
 public:
     Engineer(string name, int age) : Employee(name, age){}
+    virtual void work() override{
+        cout << this->name << " is working\n";
+    };
 };
 
 
@@ -95,7 +97,7 @@ int main() {
     m1->addEmployee(e1);
     m1->addEmployee(m2);
     m2->addEmployee(e2);
-    m1->removeEmployee(e1);
+//    m1->removeEmployee(e1);
 
     m1->work();
 //    m2->work();
