@@ -39,7 +39,7 @@ public:
     }
 
     Shape * clone() override{
-        cout << "You just created a knew copy!";
+        cout << "You just created a new copy!";
         return new Rectangle(*this);
     }
 };
@@ -47,10 +47,11 @@ public:
 
 
 int main() {
-    Circle * circle = new Circle("blue" , 1,1,1);
-    Rectangle * rec= new Rectangle("red", 5,8,1,4);
+    Shape * circle = new Circle("blue" , 1,1,1);
+    Shape * rec= new Rectangle("red", 5,8,1,4);
     circle->clone();
     rec->clone();
     std::cout << "Hello, World!" << std::endl;
     return 0;
 }
+
