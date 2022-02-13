@@ -15,6 +15,7 @@ public:
         this->name = name;
         this->age = age;
     }
+    // our operation
     virtual void work(){
         cout << this->name << " is working\n";
     };
