@@ -7,6 +7,7 @@ using namespace std;
 
 // we can't do employee abstract because of the vector (doesn't let putting abstract objects),
 // maybe try to implement in a different way by abstract
+// component
 class Employee{
     string name;
     int age;
@@ -15,10 +16,13 @@ public:
         this->name = name;
         this->age = age;
     }
-    // our operation
     virtual void work(){
         cout << this->name << " is working\n";
     };
+
+    virtual void addEmployee(Employee * employee) {};
+
+    virtual void removeEmployee(Employee * employee) {};
 
     string getName(){
         return this->name;
@@ -48,14 +52,14 @@ public:
         this->v = new vector<Employee *>();
     }
 
-    void addEmployee(Employee * employee){
+    void addEmployee(Employee * employee) override{
         this->v->push_back(employee);
     }
 
-    void removeEmployee(Employee employee){
+    void removeEmployee(Employee * employee) override{
         vector<Employee *>:: iterator it;
         for(it = v->begin(); it != v->end(); it++){
-            Employee e = **it;
+            Employee * e = *it;
             if(e == employee){
                 this->v->erase(it);
                 break;
@@ -91,6 +95,7 @@ int main() {
     m1->addEmployee(e1);
     m1->addEmployee(m2);
     m2->addEmployee(e2);
+    m1->removeEmployee(e1);
 
     m1->work();
 //    m2->work();
