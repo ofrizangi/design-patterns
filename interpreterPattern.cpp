@@ -4,11 +4,6 @@
 
 // abstract expression
 class Expression{
-protected:
-    int num;
-    Expression(int num){
-        this->num = num;
-    }
 
 //    friend int operator+(const Expression & e1, const Expression & e2);
 //    friend int operator-(const Expression & e1, const Expression & e2);
@@ -19,8 +14,11 @@ public:
 
 // terminal expression
 class NumNode: public Expression{
+    int num;
 public:
-    NumNode(int num): Expression(num){}
+    NumNode(int num){
+        this->num = num;
+    }
     int interpret() override{
         return this->num;
     }
@@ -32,7 +30,7 @@ protected:
     Expression * exp1;
     Expression * exp2;
 public:
-    BinaryNode(Expression * exp1, Expression * exp2): Expression(num){
+    BinaryNode(Expression * exp1, Expression * exp2){
         this->exp1 = exp1;
         this->exp2 = exp2;
     }
