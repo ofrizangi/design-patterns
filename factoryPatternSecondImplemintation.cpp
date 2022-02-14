@@ -1,5 +1,6 @@
 #include <iostream>
 #include <map>
+#include <algorithm>
 
 using namespace std;
 
@@ -33,47 +34,50 @@ public:
     ~Lecturer() = default;
 };
 
-map<string, Worker *> * mapWorkers;
 
 class WorkerFactory{
 
 private:
-    // like the first implmintetion
 
-//    class Creator{
-//        virtual Worker * factoryMethod() = 0;
-//    };
-//    class AdminCreator: public Creator{
-//        Worker * factoryMethod() override{
-//            return new Admin();
-//        }
-//    };
-//    class TACreator: public Creator{
-//        Worker * factoryMethod() override{
-//            return new TA();
-//        }
-//    };
-//    class LecturerCreator: public Creator{
-//        Worker * factoryMethod() override{
-//            return new Lecturer();
-//        }
-//    };
+    class Creator{
+    public:
+        virtual Worker * factoryMethod() = 0;
+    };
+
+    class AdminCreator: public Creator{
+        Worker * factoryMethod() override{
+            return new Admin();
+        }
+    };
+    class TACreator: public Creator{
+        Worker * factoryMethod() override{
+            return new TA();
+        }
+    };
+    class LecturerCreator: public Creator{
+        Worker * factoryMethod() override{
+            return new Lecturer();
+        }
+    };
+    map<string,  Creator*> * mapWorkers;
+
 
 // takes o(n) memory, but o(1) to return an object
 public:
     WorkerFactory(){
-        mapWorkers = new map<string, Worker *>();
-        mapWorkers->insert(pair<string, Worker *> ("lecturer" ,new Lecturer() ));
-        mapWorkers->insert(pair<string, Worker *> ("admin" ,new Admin() ));
-        mapWorkers->insert(pair<string, Worker *> ("ta" ,new TA() ));
+        mapWorkers = new map<string, Creator *>();
+        mapWorkers->insert(pair<string, Creator *> ("lecturer" ,new LecturerCreator()));
+        mapWorkers->insert(pair<string, Creator *> ("admin" ,new AdminCreator() ));
+        mapWorkers->insert(pair<string, Creator *> ("ta" ,new TACreator() ));
     }
 
     Worker * createWorker(const string & id){
-        return mapWorkers->find(id)->second;
+        Creator * c = mapWorkers->find(id)->second;
+        return c->factoryMethod();
     }
 
     ~WorkerFactory(){
-        map<string, Worker *>:: iterator it;
+        map<string, Creator *>:: iterator it;
         for(it = mapWorkers->begin(); it != mapWorkers->end(); it++){
             delete it->second;
         }
