@@ -2,7 +2,7 @@
 #include <iostream>
 
 using namespace std;
-
+// the light is the reciever
 class Light{
 public:
     void lightOn(){
